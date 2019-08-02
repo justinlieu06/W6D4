@@ -2,10 +2,12 @@ require 'byebug'
 class UsersController < ApplicationController
   
   def index
-    # debugger
-   
-   render json: User.all
-
+    debugger
+    if params[:user_id]
+      render json: User.
+    else
+     render json: User.all
+    end
   end
 
   def show
@@ -37,10 +39,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    debugger
     user = User.find(params[:id])
-    user.destroy
-    render json: user
+    if user.destroy
+      render json: user
+    else
+      render json: user.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   private
